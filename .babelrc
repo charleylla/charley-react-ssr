@@ -1,0 +1,13 @@
+{
+  "presets": [
+    "@babel/env",
+    "@babel/react"
+  ],
+  "plugins": [
+    [ "@babel/transform-runtime",{"regenerator": true}],
+    ["@babel/plugin-proposal-decorators", { 
+        "decoratorsBeforeExport":true
+       }
+    ]
+  ]
+}
