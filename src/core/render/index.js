@@ -18,9 +18,10 @@ export class ServerRender {
     this.content = "";
     this.initialState = {};
     this.initialStateStr = "";
-    this.context = {};
+    this.context = { cssList:[] };
     this.scriptUrl = manifest["client.js"];
     this.htmlStr = "";
+    this.styleStr = "";
   }
   async initialStore(){
     let matchedRoutesRoutes = [];
@@ -46,6 +47,10 @@ export class ServerRender {
       </Provider>
     ));
   }
+  initialStyle(){
+    const { cssList } = this.context;
+    this.styleStr = cssList.join("");
+  }
   getRenderHTML(){
     const htmlStr = `
       <!DOCTYPE html>
@@ -55,6 +60,7 @@ export class ServerRender {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Charley SSR</title>
+        <style>${this.styleStr}</style>
         <script>
           window.__INITIAL_STATE__ = ${this.initialStateStr}
         </script>
@@ -70,6 +76,7 @@ export class ServerRender {
   async render(){
     await this.initialStore();
     this.initialContent();
+    this.initialStyle();
     this.getRenderHTML();
     this.res.send(this.htmlStr);
   }

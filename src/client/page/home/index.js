@@ -2,6 +2,7 @@ import React,{ Component } from "react";
 import PropTypes from "prop-types";
 import { getNewsList } from "./store"
 import connect from "./connect";
+import { withStyle } from "@core/aop";
 import style from "./style.m.scss";
 
 class HomePage extends Component{
@@ -35,4 +36,4 @@ HomePage.propTypes = {
   getNewsList:PropTypes.func
 }
 
-export default connect(HomePage);
+export default connect(withStyle(HomePage,style));
