@@ -2,6 +2,7 @@ import React,{ Component } from "react";
 import PropTypes from "prop-types";
 import { getNewsList } from "./store"
 import connect from "./connect";
+import style from "./style.m.scss";
 
 class HomePage extends Component{
   static async loadData(store){
@@ -21,10 +22,10 @@ class HomePage extends Component{
   render(){
     const NewsList = this.renderNewsList();
     return (
-      <React.Fragment>
+      <section className={style.section}>
         {NewsList}
-        <div>HOME<button onClick={()=>{console.log("HOME");}}>ABOUT</button></div>
-      </React.Fragment>
+        <div>主页<button onClick={()=>{console.log("主页");}}>点我点我</button></div>
+      </section>
     );
   }
 }

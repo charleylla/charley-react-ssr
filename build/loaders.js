@@ -8,7 +8,8 @@ const cssLoaderModulesClient = {
     {
       loader:"css-loader",
       options:{
-        modules:true
+        modules:true,
+        localIdentName: "[local]--[hash:base64:5]"
       }
     },
     "postcss-loader"
@@ -20,11 +21,11 @@ const cssLoaderModulesServer = {
   exclude: /node_modules/,
   use: [
     "isomorphic-style-loader",
-    "style-loader",
     {
       loader:"css-loader",
       options:{
-        modules:true
+        modules:true,
+        localIdentName: "[local]--[hash:base64:5]"
       }
     },
     "postcss-loader"
@@ -39,7 +40,8 @@ const sassLoaderModulesClient = {
     {
       loader:"css-loader",
       options:{
-        modules:true
+        modules:true,
+        localIdentName: "[local]--[hash:base64:5]"
       }
     },
     "sass-loader",
@@ -47,7 +49,7 @@ const sassLoaderModulesClient = {
     {
       loader: "sass-resources-loader",
       options: {
-        resources: resolve("src/client/assets/style/main.scss"),
+        resources: resolve("src/client/asset/style/main.scss"),
       },
     }
   ]
@@ -58,11 +60,11 @@ const sassLoaderModulesServer = {
   exclude: /node_modules/,
   use: [
     "isomorphic-style-loader",
-    "style-loader",
     {
       loader:"css-loader",
       options:{
-        modules:true
+        modules:true,
+        localIdentName: "[local]--[hash:base64:5]"
       }
     },
     "sass-loader",
@@ -70,7 +72,7 @@ const sassLoaderModulesServer = {
     {
       loader: "sass-resources-loader",
       options: {
-        resources: resolve("src/client/assets/style/main.scss"),
+        resources: resolve("src/client/asset/style/main.scss"),
       },
     }
   ]
@@ -91,14 +93,13 @@ const cssLoaderServer = {
   exclude: /node_modules|\.m\.css/,
   use: [
     "isomorphic-style-loader",
-    "style-loader",
-   "css-loader",
+    "css-loader",
     "postcss-loader"
   ]
 }
 
 const sassLoaderClient = {
-  test: /\.m\.scss$/,
+  test: /\.scss$/,
   exclude: /node_modules|\.m\.scss/,
   use: [
     "style-loader",
@@ -108,25 +109,25 @@ const sassLoaderClient = {
     {
       loader: "sass-resources-loader",
       options: {
-        resources: resolve("src/client/assets/style/main.scss"),
+        resources: resolve("src/client/asset/style/main.scss"),
       },
     }
   ]
 }
 
+
 const sassLoaderServer = {
-  test: /\.m\.scss$/,
+  test: /\.scss$/,
   exclude: /node_modules|\.m\.scss/,
   use: [
     "isomorphic-style-loader",
-    "style-loader",
     "css-loader",
     "sass-loader",
     "postcss-loader",
     {
       loader: "sass-resources-loader",
       options: {
-        resources: resolve("src/client/assets/style/main.scss"),
+        resources: resolve("src/client/asset/style/main.scss"),
       },
     }
   ]
@@ -179,17 +180,17 @@ exports.loaderGen = (plantform) => {
   ]
   if(plantform === "SERVER"){
     basicLoaders.push(
-      cssLoaderModulesServer,
-      sassLoaderModulesServer,
       cssLoaderServer,
-      sassLoaderServer
+      sassLoaderServer,
+      sassLoaderModulesServer,
+      cssLoaderModulesServer,
     );
   }else if(plantform === "CLIENT"){
     basicLoaders.push(
+      cssLoaderClient,
+      sassLoaderClient,
       cssLoaderModulesClient,
       sassLoaderModulesClient,
-      cssLoaderClient,
-      sassLoaderClient
     );
   }
   return basicLoaders;

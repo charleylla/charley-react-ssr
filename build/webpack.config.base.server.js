@@ -4,7 +4,7 @@ const { loaderGen } = require("./loaders");
 const { resolve } = require("./bundle");
 
 module.exports = () => {
-  basicConfig.entry = { server:resolve("src/server/index.js") };
+  basicConfig.entry = { server:resolve("src/server/app.js") };
   basicConfig.output = {
     filename:"server.js",
     path:resolve("dist")
