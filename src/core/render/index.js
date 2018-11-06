@@ -3,6 +3,7 @@ import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router";
 import { Provider } from "react-redux";
 import { matchRoutes } from "react-router-config";
+import { minify } from "html-minifier";
 import manifest from "@src/manifest.json";
 import { getStore } from "@core/store";
 import App from "@client/App";
@@ -51,6 +52,15 @@ export class ServerRender {
     const { cssList } = this.context;
     this.styleStr = cssList.join("");
   }
+  minifyHTML(htmlStr,option = {}){
+    return minify(htmlStr,{
+      removeAttributeQuotes: true,
+      collapseWhitespace:true,
+      collapseInlineTagWhitespace:true,
+      minifyCSS:true,
+      ...option
+    })
+  }
   getRenderHTML(){
     const htmlStr = `
       <!DOCTYPE html>
@@ -71,7 +81,7 @@ export class ServerRender {
       </body>
       </html>
     `
-    this.htmlStr = htmlStr;
+    this.htmlStr = this.minifyHTML(htmlStr);
   }
   async render(){
     await this.initialStore();
