@@ -5,49 +5,29 @@
   "main": "index.js",
   "scripts": {
     "start": "better-npm-run start",
-    "build": "better-npm-run build",
-    "dev:server": "better-npm-run  dev:server",
-    "dev:client": "better-npm-run dev:client",
-    "build:server": "better-npm-run build:server",
-    "build:client": "better-npm-run build:client",
+    "compile": "better-npm-run compile",
     "run:server": "better-npm-run run:server",
+    "build": "better-npm-run build",
     "update:check": "better-npm-run update:check",
     "update": "better-npm-run update"
   },
   "betterScripts": {
-    "start": "npm-run-all --parallel dev:* run:server",
-    "build": "npm-run-all --parallel build:*",
+    "start":"npm-run-all --parallel compile run:server",
     "run:server": "nodemon --watch dist/server.js --exec node dist/server.js",
+    "compile": {
+      "command": "webpack --config ./build/webpack.config.js --watch",
+      "env": {
+        "ENV": "DEVELOPMENT"
+      }
+    },
+    "build": {
+      "command": "webpack --config ./build/webpack.config.js",
+      "env": {
+        "ENV": "PRODUCTION"
+      }
+    },
     "update:check": "ncu",
-    "update": "ncu -a",
-    "dev:server": {
-      "command": "webpack --config build/webpack.config.js --watch",
-      "env": {
-        "PLANTFORM": "SERVER",
-        "ENV": "DEVELOPMENT"
-      }
-    },
-    "dev:client": {
-      "command": "webpack --config build/webpack.config.js --watch",
-      "env": {
-        "PLANTFORM": "CLIENT",
-        "ENV": "DEVELOPMENT"
-      }
-    },
-    "build:server": {
-      "command": "webpack --config build/webpack.config.js",
-      "env": {
-        "PLANTFORM": "SERVER",
-        "ENV": "PRODUCTION"
-      }
-    },
-    "build:client": {
-      "command": "webpack --config build/webpack.config.js",
-      "env": {
-        "PLANTFORM": "CLIENT",
-        "ENV": "PRODUCTION"
-      }
-    }
+    "update": "ncu -a"
   },
   "keywords": [],
   "author": "",
@@ -68,8 +48,8 @@
     "copy-webpack-plugin": "^4.6.0",
     "cross-env": "^5.2.0",
     "css-loader": "^1.0.1",
-    "eslint": "^5.0.1",
-    "eslint-loader": "^2.0.0",
+    "eslint": "^5.8.0",
+    "eslint-loader": "^2.1.1",
     "eslint-plugin-react": "^7.11.1",
     "file-loader": "^2.0.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
@@ -77,7 +57,7 @@
     "http-server": "^0.11.1",
     "isomorphic-style-loader": "^4.0.0",
     "node-sass": "^4.10.0",
-    "nodemon": "^1.18.5",
+    "nodemon": "^1.18.6",
     "npm-check-updates": "^2.14.2",
     "npm-run-all": "^4.1.3",
     "postcss-loader": "^3.0.0",
@@ -85,9 +65,10 @@
     "sass-resources-loader": "^1.3.4",
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",
-    "webpack": "^4.24.0",
+    "webpack": "^4.25.1",
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.1.2",
+    "webpack-dev-middleware": "^3.4.0",
     "webpack-manifest-plugin": "^2.0.4",
     "webpack-merge": "^4.1.4",
     "webpack-node-externals": "^1.7.2"

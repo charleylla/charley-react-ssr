@@ -115,7 +115,6 @@ const sassLoaderClient = {
   ]
 }
 
-
 const sassLoaderServer = {
   test: /\.scss$/,
   exclude: /node_modules|\.m\.scss/,
@@ -167,7 +166,6 @@ const eslintLoader = {
   loader: "eslint-loader",
   options: {
     fix:true,
-    emitWarning:true,
   }
 }
 

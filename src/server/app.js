@@ -1,5 +1,5 @@
 import express from "express";
-import { ServerRender } from "@core/render"
+import { ServerRender } from "@core/render";
 
 const { env:{ PORT } } = process;
 const app = express();

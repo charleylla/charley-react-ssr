@@ -1,9 +1,8 @@
 const ManifestPlugin = require("webpack-manifest-plugin")
-const basicConfig = require("./webpack.config.base");
 const { loaderGen } = require("./loaders");
 const { resolve } = require("./bundle");
 
-module.exports = () => {
+module.exports = (basicConfig) => {
   basicConfig.entry = { client:resolve("src/client/index.js") };
   basicConfig.output = {
     filename:"bundle.[hash:5].js",

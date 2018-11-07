@@ -1,9 +1,8 @@
 const NodeExternals = require("webpack-node-externals");
-const basicConfig = require("./webpack.config.base");
 const { loaderGen } = require("./loaders");
 const { resolve } = require("./bundle");
 
-module.exports = () => {
+module.exports = (basicConfig) => {
   basicConfig.entry = { server:resolve("src/server/app.js") };
   basicConfig.output = {
     filename:"server.js",

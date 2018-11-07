@@ -2,3 +2,4 @@ node_modules
 dist
 static
 *.log
+manifest.json

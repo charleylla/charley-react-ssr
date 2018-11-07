@@ -1,7 +1,7 @@
 const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 const { alias } = require("./alias");
 
-module.exports = {
+module.exports = () => ({
   entry:"",
   output:{},
   module:{},
@@ -13,4 +13,4 @@ module.exports = {
   plugins: [
     new FriendlyErrorsWebpackPlugin(),
   ]
-}
+})
