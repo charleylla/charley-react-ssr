@@ -7,12 +7,12 @@ const prodConfigGen = require("./config.production");
 
 const webpackConfig = [];
 if(ENV === "DEVELOPMENT"){
-  const devServerConfig = devConfigGen(serverConfigGen(baseConfigGen()));
-  const devClientConfig = devConfigGen(clientConfigGen(baseConfigGen()));
+  const devServerConfig = devConfigGen(serverConfigGen(baseConfigGen(),ENV));
+  const devClientConfig = devConfigGen(clientConfigGen(baseConfigGen(),ENV));
   webpackConfig.push(devServerConfig,devClientConfig);
 }else if(ENV === "PRODUCTION"){
-  const prodServerConfig = prodConfigGen(serverConfigGen(baseConfigGen()));
-  const prodClientConfig = prodConfigGen(clientConfigGen(baseConfigGen()));
+  const prodServerConfig = prodConfigGen(serverConfigGen(baseConfigGen(),ENV));
+  const prodClientConfig = prodConfigGen(clientConfigGen(baseConfigGen(),ENV));
   webpackConfig.push(prodServerConfig,prodClientConfig);
 }
 

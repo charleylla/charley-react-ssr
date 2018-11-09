@@ -6,22 +6,34 @@
   "scripts": {
     "start": "better-npm-run start",
     "compile": "better-npm-run compile",
-    "run:server": "better-npm-run run:server",
+    "serve-dev": "better-npm-run serve-dev",
+    "serve-build": "better-npm-run serve-build",
     "build": "better-npm-run build",
     "update:check": "better-npm-run update:check",
     "update": "better-npm-run update"
   },
   "betterScripts": {
-    "start":"npm-run-all --parallel compile run:server",
-    "run:server": "nodemon --watch dist/server.js --exec node dist/server.js",
+    "start": "npm-run-all --parallel compile serve-dev",
+    "build":{
+      "command":"webpack --config config/webpack.config.js",
+      "env": {
+        "ENV": "PRODUCTION"
+      }
+    },
     "compile": {
-      "command": "webpack --config ./build/webpack.config.js --watch",
+      "command": "node ./script/start.js",
       "env": {
         "ENV": "DEVELOPMENT"
       }
     },
-    "build": {
-      "command": "webpack --config ./build/webpack.config.js",
+    "serve-dev": {
+      "command": "nodemon --watch .build/server.js --exec node .build/server.js",
+      "env": {
+        "ENV": "DEVELOPMENT"
+      }
+    },
+    "serve-build": {
+      "command": "node build/server",
       "env": {
         "ENV": "PRODUCTION"
       }
@@ -66,9 +78,10 @@
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",
     "webpack": "^4.25.1",
-    "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.1.2",
     "webpack-dev-middleware": "^3.4.0",
+    "webpack-hot-middleware": "^2.24.3",
+    "webpack-livereload-plugin": "^2.1.1",
     "webpack-manifest-plugin": "^2.0.4",
     "webpack-merge": "^4.1.4",
     "webpack-node-externals": "^1.7.2"

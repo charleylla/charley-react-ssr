@@ -1,13 +1,14 @@
+import fs from "fs";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router";
 import { Provider } from "react-redux";
 import { matchRoutes } from "react-router-config";
 import { minify } from "html-minifier";
-import manifest from "@src/manifest.json";
 import { getStore } from "@core/store";
 import App from "@client/App";
 import { routes } from "@core/router";
+const { env:{ CLIENT_PORT,ENV,LIVERELOAD_PORT } } = process;
 
 export class ServerRender {
   constructor(req,res){
@@ -20,9 +21,13 @@ export class ServerRender {
     this.initialState = {};
     this.initialStateStr = "";
     this.context = { cssList:[] };
-    this.scriptUrl = manifest["client.js"];
     this.htmlStr = "";
     this.styleStr = "";
+    this.scriptUrl = "";
+    if(ENV === "PRODUCTION"){
+      // this.scriptUrl = "client/" + require("/manifest.json")["client.js"];
+      console.log(this.scriptUrl)
+    }
   }
   async initialStore(){
     let matchedRoutesRoutes = [];
@@ -62,6 +67,11 @@ export class ServerRender {
     })
   }
   getRenderHTML(){
+    let scriptUrl = this.scriptUrl,liverReloadScriptTag = "";
+    if(ENV === "DEVELOPMENT"){
+      scriptUrl = `http://localhost:${CLIENT_PORT || 9099}/dev-client-script.js`;
+      liverReloadScriptTag = `<script src="http://localhost:${LIVERELOAD_PORT || 35729}/livereload.js"></script>`
+    }
     const htmlStr = `
       <!DOCTYPE html>
       <html>
@@ -77,17 +87,18 @@ export class ServerRender {
       </head>
       <body>
         <div id="root">${this.content}</div>
-        <script src="/${this.scriptUrl}"></script>
+        ${liverReloadScriptTag}
+        <script src="${scriptUrl}"></script>
       </body>
       </html>
     `
     this.htmlStr = this.minifyHTML(htmlStr);
   }
-  async render(){
+  async render(CLIENT_PORT){
     await this.initialStore();
     this.initialContent();
     this.initialStyle();
-    this.getRenderHTML();
+    this.getRenderHTML(CLIENT_PORT);
     this.res.send(this.htmlStr);
   }
 }

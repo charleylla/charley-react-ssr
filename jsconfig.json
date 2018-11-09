@@ -3,10 +3,11 @@
     "baseUrl": "./",
     "paths": {
       "@src/*": ["src/*"],
+      "@config/*": ["config/*"],
       "@static/*": ["static/*"],
       "@dist/*": ["dist/*"],
       "@client":["src/client/*"],
-      "@server":["src/server/*"],
+      "@server":["src/server/*"]
     },
     "target": "ES6",
     "allowSyntheticDefaultImports": true,
