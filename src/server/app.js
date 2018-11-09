@@ -3,7 +3,9 @@ import { ServerRender } from "@core/render";
 import { resolve } from "@config/bundle"
 const { env:{ SERVER_PORT } } = process;
 const app = express();
-app.use(express.static(resolve("static")));
+
+const PROD_STATIC_DIR = process.cwd() + "/build/client";
+app.use(express.static(PROD_STATIC_DIR));
 
 app.get("*", (req, res)  => {
   new ServerRender(req,res).render();

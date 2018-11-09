@@ -25,7 +25,7 @@ class HomePage extends Component{
     return (
       <section className={style.section}>
         {NewsList}
-        <div>~~~~测试!!!!<button onClick={()=>{console.log("主页");}}>点我点我</button></div>
+        <div>~~测试~~<button onClick={()=>{console.log("主页");}}>点我点我</button></div>
       </section>
     );
   }

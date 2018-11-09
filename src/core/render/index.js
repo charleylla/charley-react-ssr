@@ -1,3 +1,4 @@
+import fs from "fs";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router";
@@ -24,8 +25,12 @@ export class ServerRender {
     this.styleStr = "";
     this.scriptUrl = "";
     if(ENV === "PRODUCTION"){
-      // this.scriptUrl = "client/" + require("/manifest.json")["client.js"];
-      console.log(this.scriptUrl)
+      const manifestDir = process.cwd() + "/build/manifest.json";
+      fs.readFile(manifestDir,(err,data) => {
+        if(err) return;
+        const manifestURL = JSON.parse(data.toString())["client.js"];
+        this.scriptUrl = manifestURL;
+      })
     }
   }
   async initialStore(){
