@@ -14,10 +14,10 @@ const app = express();
 app.use(webpackDevMiddleware(clientCompiler,{
   watchOptions
 }));
-app.use("/dev-client-script.js", async (req, res)  => {
-    const { records:{hash} } = clientCompiler;
+app.use("/dev-client-script.js", (req, res)  => {
+  const { records:{hash} } = clientCompiler;
   const clientOutputFileName = `bundle.${hash.substr(0,5)}.js`;
-  res.redirect(clientOutputFileName);
+  res.redirect(`${clientOutputFileName}?target=${clientOutputFileName}`);
 });
 app.listen(CLIENT_PORT || 9099,() => {
   console.log(`客户端脚本编译服务已启动，正在监听 ${CLIENT_PORT || 9099} 端口`);

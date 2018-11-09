@@ -1,4 +1,3 @@
-import fs from "fs";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router";
@@ -69,7 +68,7 @@ export class ServerRender {
   getRenderHTML(){
     let scriptUrl = this.scriptUrl,liverReloadScriptTag = "";
     if(ENV === "DEVELOPMENT"){
-      scriptUrl = `http://localhost:${CLIENT_PORT || 9099}/dev-client-script.js`;
+      scriptUrl = `http://localhost:${CLIENT_PORT || 9099}/dev-client-script.js?q=${+new Date()}`;
       liverReloadScriptTag = `<script src="http://localhost:${LIVERELOAD_PORT || 35729}/livereload.js"></script>`
     }
     const htmlStr = `
@@ -99,6 +98,11 @@ export class ServerRender {
     this.initialContent();
     this.initialStyle();
     this.getRenderHTML(CLIENT_PORT);
+    if(ENV === "DEVELOPMENT"){
+      await new Promise((res) => {
+        setTimeout(() => {res()},100)
+      })
+    }
     this.res.send(this.htmlStr);
   }
 }

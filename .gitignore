@@ -1,5 +1,7 @@
 node_modules
 dist
 static
+build
+.build
 *.log
 manifest.json
