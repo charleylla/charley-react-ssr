@@ -14,8 +14,8 @@
   },
   "betterScripts": {
     "start": "npm-run-all --parallel compile serve-dev",
-    "build":{
-      "command":"webpack --config config/webpack.config.js",
+    "build": {
+      "command": "webpack --config config/webpack.config.js",
       "env": {
         "ENV": "PRODUCTION"
       }
@@ -68,6 +68,7 @@
     "html-minifier": "^3.5.21",
     "http-server": "^0.11.1",
     "isomorphic-style-loader": "^4.0.0",
+    "jest": "^23.6.0",
     "node-sass": "^4.10.0",
     "nodemon": "^1.18.6",
     "npm-check-updates": "^2.14.2",
